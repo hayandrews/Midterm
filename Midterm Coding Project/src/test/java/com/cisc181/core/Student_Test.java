@@ -151,7 +151,7 @@ public class Student_Test {
 		double GPA = 0;
 		ArrayList<Double> allsum = new ArrayList<Double>();
 		ArrayList<Double> allcredit = new ArrayList<Double>();
-		
+
 		double allgrades = 0;
 
 		for (Student astu : student) {
@@ -196,16 +196,16 @@ public class Student_Test {
 
 		double tc3 = allsum.get(9);
 		assertEquals(tc3, 24, .01);
-		
+
 		double totalcredits = 0;
 		for (Student astu : student) {
 			for (Course acourse : course) {
 				for (Section asec : section) {
 					if (asec.getCourseID() == acourse.getCourseID()) {
-					totalcredits += acourse.getGradePoints();
+						totalcredits += acourse.getGradePoints();
 					}
 				}
-			}			
+			}
 			allcredit.add(totalcredits);
 			totalcredits = 0;
 		}
@@ -215,33 +215,88 @@ public class Student_Test {
 		double sgpa2 = allcredit.get(9);
 		assertEquals(sgpa2, 6, .01);
 		double sgpa3 = allcredit.get(6);
-		assertEquals(sgpa2, 6, .01);
+		assertEquals(sgpa3, 6, .01);
 
 		ArrayList<Double> gpa = new ArrayList<Double>();
 		double adder = 0;
-		for(int x = 0; x < allsum.size(); x++) {
-			adder = allsum.get(x)/allcredit.get(x);
+		for (int x = 0; x < allsum.size(); x++) {
+			adder = allsum.get(x) / allcredit.get(x);
 			gpa.add(adder);
 		}
 		assertEquals(gpa.size(), 10, .01);
-		
+
 		double tc2 = allsum.get(5);
 		assertEquals(tc2, 3.96, .01);
 
 		double gpa1 = gpa.get(0);
 		assertEquals(gpa1, 0, .01);
-		double gpa2 = gpa.get(5);
-		assertEquals(gpa2, .66, .01);
-		double gpa3 = gpa.get(9);
-		assertEquals(gpa3, 4.0, .01);
+		double gpa2 = gpa.get(2);
+		assertEquals(gpa2, 0, .01);
+		double gpa3 = gpa.get(3);
+		assertEquals(gpa3, 0, .01);
+		double gpa4 = gpa.get(4);
+		assertEquals(gpa4, 0, .01);
+		double gpa5 = gpa.get(5);
+		assertEquals(gpa5, .66, .01);
+		double gpa6 = gpa.get(6);
+		assertEquals(gpa6, 1.66, .01);
+		double gpa7 = gpa.get(7);
+		assertEquals(gpa7, 2.66, .01);
+		double gpa8 = gpa.get(8);
+		assertEquals(gpa8, 3.66, .01);
+		double gpa9 = gpa.get(9);
+		assertEquals(gpa9, 4.0, .01);
 
 	}
 
 	@Test
-	public void gradeaveragetest(){
+	public void gradeaveragetest() {
+		ArrayList<Double> allcourses = new ArrayList<Double>();
+		double total = 0;
+		ArrayList<Double> studentcount = new ArrayList<Double>();
+		double counttotal = 0;
+
+		for (Section asec : section) {
+			for (Enrollment aroll : enroll) {
+				if (aroll.getSectionID() == asec.getSectionID()) {
+					total += aroll.getGrade();
+					counttotal += 1;
+				}
+			}
+			allcourses.add(total);
+			total = 0;
+			studentcount.add(counttotal);
+			counttotal = 0;
+		}
+		Double count1 = studentcount.get(1);
+		assertEquals(count1, 10, 1);
+		Double course1 = allcourses.get(1);
+		assertEquals(course1, 550, .01);
+		Double course9 = allcourses.get(5);
+		assertEquals(course9, 550, .01);
 		
+		ArrayList<Double> gradeav = new ArrayList<Double>();
+		double adder = 0;
+		for (int x = 0; x < allcourses.size(); x++) {
+			adder = allcourses.get(x) / studentcount.get(x);
+			gradeav.add(adder);
+		}
+		
+		double av1 = gradeav.get(0);
+		assertEquals(av1, 55, 1);
+		double av2 = gradeav.get(1);
+		assertEquals(av2, 55, 1);
+		double av3 = gradeav.get(2);
+		assertEquals(av3, 55, 1);
+		double av4 = gradeav.get(3);
+		assertEquals(av4, 55, 1);
+		double av5 = gradeav.get(4);
+		assertEquals(av5, 55, 1);
+		double av6 = gradeav.get(5);
+		assertEquals(av6, 55, 1);
+
 	}
-	
+
 	@Test
 	public void majorchangetest() {
 
