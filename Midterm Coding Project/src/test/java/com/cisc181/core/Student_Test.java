@@ -11,6 +11,11 @@ import org.junit.Test;
 
 import com.cisc181.eNums.eMajor;
 
+/**
+ * 
+ * @author Hayley Andrews
+ *
+ */
 public class Student_Test {
 	private static ArrayList<Course> course;
 	private static ArrayList<Semester> semester;
@@ -18,6 +23,13 @@ public class Student_Test {
 	private static ArrayList<Student> student;
 	private static ArrayList<Enrollment> enroll;
 
+	/**
+	 * Creates instances of Student, Course, Semester and sections and adds to
+	 * individual arrays Then Enrolls each of the 10 students in the created
+	 * sections with a given grade
+	 * 
+	 * @throws PersonException
+	 */
 	@BeforeClass
 	public static void setup() throws PersonException {
 
@@ -145,10 +157,12 @@ public class Student_Test {
 		assertEquals(getenroll6.getGrade(), 60, .01);
 	}
 
+	/**
+	 * Tests the average GPA for each student
+	 */
 	@Test
 	public void GPAtest() {
 
-		double GPA = 0;
 		ArrayList<Double> allsum = new ArrayList<Double>();
 		ArrayList<Double> allcredit = new ArrayList<Double>();
 
@@ -249,6 +263,9 @@ public class Student_Test {
 
 	}
 
+	/**
+	 * Determines each course average and tested with assertEquals
+	 */
 	@Test
 	public void gradeaveragetest() {
 		ArrayList<Double> allcourses = new ArrayList<Double>();
@@ -274,14 +291,14 @@ public class Student_Test {
 		assertEquals(course1, 550, .01);
 		Double course9 = allcourses.get(5);
 		assertEquals(course9, 550, .01);
-		
+
 		ArrayList<Double> gradeav = new ArrayList<Double>();
 		double adder = 0;
 		for (int x = 0; x < allcourses.size(); x++) {
 			adder = allcourses.get(x) / studentcount.get(x);
 			gradeav.add(adder);
 		}
-		
+
 		double av1 = gradeav.get(0);
 		assertEquals(av1, 55, 1);
 		double av2 = gradeav.get(1);
@@ -297,6 +314,9 @@ public class Student_Test {
 
 	}
 
+	/**
+	 * Changes the major of a student
+	 */
 	@Test
 	public void majorchangetest() {
 
