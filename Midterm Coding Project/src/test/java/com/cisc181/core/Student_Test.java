@@ -105,39 +105,143 @@ public class Student_Test {
 		student.add(student8);
 		student.add(student9);
 		student.add(student10);
-	}
 
-	@Test
-	public void Enroll() {
-		Enrollment enrolling = null;
-		double i = 0;
+		enroll = new ArrayList<Enrollment>();
+
 		for (Section sec : section) {
 			for (Student stu : student) {
-				enrolling = (new Enrollment(stu.getStudentID(), sec.getSectionID()));
+				double i = 0;
+				Enrollment enrolling = (new Enrollment(stu.getStudentID(), sec.getSectionID()));
 				enroll.add(enrolling);
 				for (Enrollment enrol : enroll) {
-					enrol.setGrade(i);
-					if (i > 100) {
-						i = 0;
-					} else {
+					if (i < 101) {
 						i += 10;
 					}
-
+					if (i > 100) {
+						i = 0;
+						i += 10;
+					}
+					enrol.setGrade(i);
 				}
 			}
 		}
 
+		Enrollment getenroll = enroll.get(11);
+		Enrollment getanotherroll = enroll.get(1);
+		assertEquals(getenroll.getGrade(), 20, .01);
+		assertEquals(getenroll.getStudentID() == getanotherroll.getStudentID(), true);
+
+		Enrollment getenroll1 = enroll.get(5);
+		Enrollment getenroll2 = enroll.get(15);
+		Enrollment getenroll3 = enroll.get(25);
+		Enrollment getenroll4 = enroll.get(35);
+		Enrollment getenroll5 = enroll.get(45);
+		Enrollment getenroll6 = enroll.get(55);
+		assertEquals(getenroll1.getGrade(), 60, .01);
+		assertEquals(getenroll2.getGrade(), 60, .01);
+		assertEquals(getenroll3.getGrade(), 60, .01);
+		assertEquals(getenroll4.getGrade(), 60, .01);
+		assertEquals(getenroll5.getGrade(), 60, .01);
+		assertEquals(getenroll6.getGrade(), 60, .01);
+	}
+
+	@Test
+	public void GPAtest() {
+
 		double GPA = 0;
+		ArrayList<Double> allsum = new ArrayList<Double>();
+		ArrayList<Double> allcredit = new ArrayList<Double>();
+		
 		double allgrades = 0;
+
+		for (Student astu : student) {
+			for (Enrollment aenroll : enroll) {
+				if (aenroll.getStudentID() == astu.getStudentID()) {
+					if (aenroll.getGrade() > 95) {
+						aenroll.setGrade(4.0);
+					} else if (aenroll.getGrade() >= 90 && aenroll.getGrade() < 95) {
+						aenroll.setGrade(3.66);
+					} else if (aenroll.getGrade() < 90 && aenroll.getGrade() >= 87) {
+						aenroll.setGrade(3.33);
+					} else if (aenroll.getGrade() < 87 && aenroll.getGrade() >= 83) {
+						aenroll.setGrade(3.0);
+					} else if (aenroll.getGrade() < 83 && aenroll.getGrade() >= 80) {
+						aenroll.setGrade(2.66);
+					} else if (aenroll.getGrade() < 80 && aenroll.getGrade() >= 77) {
+						aenroll.setGrade(2.33);
+					} else if (aenroll.getGrade() < 77 && aenroll.getGrade() >= 73) {
+						aenroll.setGrade(2.0);
+					} else if (aenroll.getGrade() < 73 && aenroll.getGrade() >= 70) {
+						aenroll.setGrade(1.66);
+					} else if (aenroll.getGrade() < 70 && aenroll.getGrade() >= 67) {
+						aenroll.setGrade(1.33);
+					} else if (aenroll.getGrade() < 67 && aenroll.getGrade() >= 63) {
+						aenroll.setGrade(1.0);
+					} else if (aenroll.getGrade() < 63 && aenroll.getGrade() >= 60) {
+						aenroll.setGrade(0.66);
+					} else {
+						aenroll.setGrade(0);
+					}
+					allgrades += aenroll.getGrade();
+
+				}
+			}
+			allsum.add(allgrades);
+			allgrades = 0;
+		}
+
+		assertEquals(allsum.size(), 10, .01);
+		double tc = allsum.get(0);
+		assertEquals(tc, 0, .01);
+
+		double tc3 = allsum.get(9);
+		assertEquals(tc3, 24, .01);
+		
 		double totalcredits = 0;
+		for (Student astu : student) {
+			for (Course acourse : course) {
+				for (Section asec : section) {
+					if (asec.getCourseID() == acourse.getCourseID()) {
+					totalcredits += acourse.getGradePoints();
+					}
+				}
+			}			
+			allcredit.add(totalcredits);
+			totalcredits = 0;
+		}
+
+		double sgpa = allcredit.get(0);
+		assertEquals(sgpa, 6, .01);
+		double sgpa2 = allcredit.get(9);
+		assertEquals(sgpa2, 6, .01);
+		double sgpa3 = allcredit.get(6);
+		assertEquals(sgpa2, 6, .01);
+
+		ArrayList<Double> gpa = new ArrayList<Double>();
+		double adder = 0;
+		for(int x = 0; x < allsum.size(); x++) {
+			adder = allsum.get(x)/allcredit.get(x);
+			gpa.add(adder);
+		}
+		assertEquals(gpa.size(), 10, .01);
+		
+		double tc2 = allsum.get(5);
+		assertEquals(tc2, 3.96, .01);
+
+		double gpa1 = gpa.get(0);
+		assertEquals(gpa1, 0, .01);
+		double gpa2 = gpa.get(5);
+		assertEquals(gpa2, .66, .01);
+		double gpa3 = gpa.get(9);
+		assertEquals(gpa3, 4.0, .01);
 
 	}
 
-	private void gpa() {
-		// TODO Auto-generated method stub
-
+	@Test
+	public void gradeaveragetest(){
+		
 	}
-
+	
 	@Test
 	public void majorchangetest() {
 
